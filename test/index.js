@@ -67,12 +67,23 @@ describe('thunk middleware', () => {
         chai.assert.strictEqual(mutated, 1);
       });
 
-      it('support feature with flux standard action', () => {
+      it('support feature with flux standard action #1', () => {
         const actionHandler = nextHandler();
         let mutated = 0;
 
-        actionHandler({ type: 'TEST', payload: () => mutated++ });
+        actionHandler({ type: 'TEST-1', payload: () => mutated++ });
         chai.assert.strictEqual(mutated, 1);
+      });
+
+      it('support feature with flux standard action #2', (done) => {
+        const exceptd = 0;
+
+        const actionHandler = nextHandler( action => {
+          chai.assert.strictEqual(action.payload, exceptd);
+          done();
+        });
+
+        actionHandler({ type: 'TEST-2', payload: exceptd });
       });
     });
   });

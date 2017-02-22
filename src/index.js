@@ -5,7 +5,7 @@ function createThunkMiddleware(extraArgument) {
     const args = [dispatch, getState, extraArgument];
     if (typeof action === 'function') {
       return action(...args);
-    } else if (isFSA(action)) {
+    } else if (isFSA(action) && typeof action.payload === 'function') {
       return action.payload(...args);
     }
 
